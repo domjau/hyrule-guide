@@ -348,6 +348,33 @@ const CATS = [
   ['Sell gems early','',['Gems sell for lots of rupees. Most things you would use them for come much later.']],
   ['Camp at a campfire to skip time','',['Sit by a fire to wait until morning, noon or night.']]
  ]},
+ {id:'pro',name:'Pro tricks',intro:'Damage maths, exploits that still work, and systems the game never explains.',items:[
+  ['Damage multipliers stack','Combat',['Arrow headshot: 2× damage, and it stuns most enemies.','Sneakstrike (hit an unaware enemy from behind): 8×. With an Eightfold Blade: 16×.','Fuse power is added before the multiplier, so a strong horn on a sneakstrike is enormous.']],
+  ['Hidden 2× weapon traits','Combat',['Royal Guard weapons: 2× once you see “badly damaged”. Use their last hits on the hardest target.','Royal Broadsword, Claymore, Halberd: 2× during a flurry rush.','Knight’s weapons: 2× at one heart or less.','Zora weapons: 2× while you are wet. Rain or a thrown Splash Fruit counts.']],
+  ['Puffshroom shield = sneakstrike on demand','Combat',['Fuse a Puffshroom to your shield and raise it to burst a smoke cloud.','Enemies inside lose track of you, so you can sneakstrike in the middle of a fight. It also lets you mount a Lynel for free.']],
+  ['Multishot bows spend one material per volley','Bows',['Savage Lynel, Mighty Lynel and Great Eagle bows fire 3 arrows (5 with Five-Shot Burst) but use 1 arrow and 1 fuse material.','So one Keese Eye gives three homing arrows, and one bomb flower gives three blasts.','A Savage Lynel Bow with Five-Shot Burst is the strongest bow in the game.']],
+  ['The Lynel loop','Lynels',['Stun it with a face shot or a perfect guard.','Run alongside and press A to mount. Hits while mounted cost no weapon durability.','So mount with your strongest, most fragile weapon, then repeat: dodge, shoot, mount.']],
+  ['Perfect guard is free','Combat',['Tap A with your shield up just as the hit lands. It uses no shield durability and knocks the enemy off balance.','It also sends projectiles back, including boulders.','Hold ZL early and only tap A at the moment of impact.']],
+  ['Rock Octoroks repair gear','Durability',['Drop a worn weapon or shield in front of a Rock Octorok while it inhales. It spits it back like new, with a new random bonus.','Take precious fuse materials off first.']],
+  ['Fused weapons get hidden durability','Durability',['The first fuse on a weapon adds a hidden buffer (usually about 25 hits) that wears out before the weapon itself.','Unfuse and re-fuse later and the leftover buffer comes back.']],
+  ['Throw weapons that are about to break','Combat',['A thrown weapon counts as a critical hit and does double damage. Better than letting it shatter on a normal swing.']],
+  ['Gems on rods','Combat',['Fuse a ruby, sapphire or topaz to a magic rod, staff or sceptre for a much stronger elemental shot.','On a shield, gems trigger when you parry.']],
+  ['Zonai shields','Build',['Cannon on a shield fires every time you raise it.','A flame, frost or beam emitter on a shield is a flamethrower or laser while you guard.','Spring on a shield launches you when you start surfing.','Cart on a shield surfs on any ground, even rock and gloom.','They drain your battery, so keep an eye on it.']],
+  ['Hoverbike','Build',['Two fans attached to a Steering Stick, angled slightly back. Hold the stick and tilt to fly.','Save it with Autobuild so you can rebuild it anywhere.']],
+  ['Get Autobuild early','Build',['It is in the Depths at the Great Abandoned Central Mine, right under the Temple of Time ruins. You can go straight after the paraglider.','A boss waits there, so bring arrows and food.','Autobuild is free if the parts are lying nearby; otherwise it costs Zonaite.','The Forge Construct there sells extra crystallized charges every day.']],
+  ['Batteries and free lift','Build',['A Battery device on a build is drained before your own energy cells.','A Balloon heated by a campfire or burning wood rises with no battery at all.']],
+  ['Shield jump into slow motion','Movement',['While sprinting, jump onto your shield (ZL + X + A), launch off any edge or bump, then draw your bow in mid-air for bullet time.']],
+  ['Sky to Depths in one dive','Movement',['From a sky island above a chasm you can fall all the way to the Depths with no loading screen. Open the glider at the last moment.','You can use the scope while skydiving to drop pins.']],
+  ['Make your own updraft','Movement',['Set grass on fire with a fire fruit or emitter. The hot air lifts your glider like a vent.']],
+  ['Ascend onto big enemies','Movement',['Stand right under a Stone Talus or Flux Construct and use Ascend to pop up onto it, next to the weak spot.']],
+  ['Climb in the rain','Movement',['Froggy armor stops you slipping on wet walls.']],
+  ['Swap hearts and stamina','Systems',['The Horned Statue in the hidden passage under Lookout Landing (through the emergency shelter) buys a heart or stamina vessel for 100 rupees and sells either back for 120.','Swap hearts for stamina before a big climb, then swap back. A short side quest there unlocks it.']],
+  ['Robbie’s upgrades','Systems',['After helping Robbie at Lookout Landing, visit him at the Hateno Ancient Tech Lab.','He adds a shrine sensor to the Purah Pad, and later the Travel Medallion: a fast-travel point you can place anywhere.']],
+  ['Hylian Shield early','Gear',['It is in a chest at the old docks under the north side of Hyrule Castle. Light the big torch there and the chest appears.','It is by far the sturdiest shield in the game.']],
+  ['Best money','Rupees',['Five Raw Gourmet Meat cooked together sell for about 315 rupees.','Gems and Talus ore are the other big earners. Silver enemies sometimes drop gems.','Shops also buy armor, so sell sets you never wear.']],
+  ['Feed the dogs','Secrets',['Feed a dog a few times and it leads you to buried treasure.']],
+  ['About glitches','',['Item duplication glitches were patched in later updates, so this guide leaves them out.']]
+ ]},
  {id:'fuse',name:'Combat & Fuse',intro:'Hit harder without better weapons.',items:[
   ['Fuse monster parts to weak weapons','',['A horn or claw adds far more damage than the weapon underneath.','A decayed Royal weapon plus a Lynel horn hits very hard.']],
   ['Arrow fusions','',['Keese eye: arrows home in on enemies.','Muddle Bud: the enemy turns on its friends.','Bomb flower: explosive arrows.','Fire fruit, ice fruit, shock fruit: elemental shots.','Chuchu jelly in an element bursts on impact.']],
@@ -811,9 +838,10 @@ ctx.save(); ctx.globalAlpha=0.16; ctx.fillStyle='#E9D9AE'; ctx.fillRect(0,0,W,H)
 // coast surf lines
 ctx.save(); for(let w=14;w>2;w-=4){ ctx.strokeStyle='rgba(230,240,235,'+(0.06+0.02*(14-w)/4)+')'; ctx.lineWidth=w; ctx.stroke(land); } ctx.restore();
 // ---------- water features ----------
+const curveOn=(c,gpts)=>{ const p=gpts.map(([x,y])=>G(x,y)); c.beginPath(); c.moveTo(p[0][0],p[0][1]); for(let i=1;i<p.length-1;i++){ const mx=(p[i][0]+p[i+1][0])/2, my=(p[i][1]+p[i+1][1])/2; c.quadraticCurveTo(p[i][0],p[i][1],mx,my); } const L=p[p.length-1]; c.lineTo(L[0],L[1]); };
 const curve=(gpts)=>{ const p=gpts.map(([x,y])=>G(x,y)); ctx.beginPath(); ctx.moveTo(p[0][0],p[0][1]); for(let i=1;i<p.length-1;i++){ const mx=(p[i][0]+p[i+1][0])/2, my=(p[i][1]+p[i+1][1])/2; ctx.quadraticCurveTo(p[i][0],p[i][1],mx,my); } const L=p[p.length-1]; ctx.lineTo(L[0],L[1]); };
 const meander=gp=>{ const o=[]; for(let i=0;i<gp.length-1;i++){ const [a,b]=gp[i],[c,d]=gp[i+1]; for(let k=0;k<4;k++){ const t=k/4,x=a+(c-a)*t,y=b+(d-b)*t,L=Math.hypot(c-a,d-b)||1,m=(fbm(x/180,y/180,2)-0.5)*260; o.push([x-(d-b)/L*m,y+(c-a)/L*m]); } } o.push(gp[gp.length-1]); return o; };
-const river=(gp0,w)=>{ const gp=meander(gp0); ctx.lineCap='round'; ctx.lineJoin='round'; curve(gp); ctx.strokeStyle='#4F7F8A'; ctx.lineWidth=w+1.2; ctx.stroke(); curve(gp); ctx.strokeStyle='#8DB4BA'; ctx.lineWidth=w; ctx.stroke(); };
+const RIV=[]; const river=(gp0,w)=>{ RIV.push([gp0,w]); const gp=meander(gp0); ctx.lineCap='round'; ctx.lineJoin='round'; curve(gp); ctx.strokeStyle='#4F7F8A'; ctx.lineWidth=w+1.2; ctx.stroke(); curve(gp); ctx.strokeStyle='#8DB4BA'; ctx.lineWidth=w; ctx.stroke(); };
 river([[-350,640],[-200,300],[-150,-150],[-50,-700],[60,-1300],[140,-1800],[60,-2270]],3.2);
 river([[3294,453],[2950,350],[2500,250],[1900,150],[1300,0],[700,-250],[150,-500],[-80,-650]],2.6);
 river([[-2700,2350],[-2850,1600],[-2918,546],[-2650,-150],[-2150,-650],[-1700,-1000],[-1400,-1300]],2.2);
@@ -902,8 +930,21 @@ ISL.sort((a,b)=>a[1]-b[1]).forEach(([x,y,r,b])=>island(x,y,r,b));
 sk.strokeStyle='rgba(255,255,255,0.55)'; sk.lineWidth=1; for(let k=0;k<22;k++){ const x=rnd()*W, y=rnd()*H, L=30+rnd()*50; sk.beginPath(); sk.moveTo(x,y); sk.bezierCurveTo(x+L*0.3,y-6,x+L*0.6,y+6,x+L,y); sk.stroke(); sk.beginPath(); sk.arc(x+L,y-3,3,Math.PI*0.5,Math.PI*2); sk.stroke(); }
 const SB=[]; const skl=(t,x,y,size,sp,col,it)=>{ sk.font=(it?'italic 400 ':'700 ')+size+'px '+(it?'Spectral, Georgia, serif':'Cinzel, Georgia, serif'); sk.textBaseline='middle'; const ch=t.split(''); const ws=ch.map(c=>sk.measureText(c).width+sp); const tw=ws.reduce((a,b)=>a+b,0)-sp; const bx=[x-tw/2-2,y-size/2,x+tw/2+2,y+size/2]; if(SB.some(o=>bx[0]<o[2]&&bx[2]>o[0]&&bx[1]<o[3]&&bx[3]>o[1])) return; SB.push(bx); let p=x-tw/2; ch.forEach((c,i)=>{ sk.lineWidth=3.5; sk.strokeStyle='rgba(245,248,250,0.85)'; sk.strokeText(c,p,y); sk.fillStyle=col; sk.fillText(c,p,y); p+=ws[i]; }); };
 skl('THE SKY',500,40,20,8,RL); skl('GREAT SKY ISLAND',gsi[0],gsi[1]-52,12,3,RL);
+const SKN={'Hebra Mountains':'West Hebra Sky Archipelago','Tabantha Frontier':'Tabantha Sky Archipelago','Akkala':'North Akkala Sky Archipelago','Great Hyrule Forest':'North Hyrule Sky Archipelago','Central Hyrule':'South Hyrule Sky Archipelago','Lanayru Great Spring':'Lanayru Sky Archipelago','Eldin Canyon':'Eldin Sky Archipelago','West Necluda':'West Necluda Sky Archipelago','East Necluda':'Necluda Sky Archipelago','Gerudo Highlands':'Gerudo sky islands','Hyrule Ridge':'Hyrule Ridge sky islands','Faron Grasslands':''};
 const SKR={}; SHRINES.filter(s=>s.g==='Sky'&&s.r!=='Great Sky Island').forEach(s=>{ const k=s.r.replace(/ Sky$/,''); (SKR[k]=SKR[k]||[]).push(s); });
-Object.keys(SKR).forEach(k=>{ const a=SKR[k]; const x=a.reduce((m,s)=>m+s.x,0)/a.length, y=a.reduce((m,s)=>m+s.y,0)/a.length; skl('Skies of '+k,x,y+34,8,0,'#2C3E50',true); });
+// Thunderhead Isles storm (Faron sky)
+{ const [x,y]=G(1040,-3200); for(let k=0;k<9;k++){ const ox=x+(rnd()-0.5)*70, oy=y+(rnd()-0.5)*40, r=26+rnd()*22; const g=sk.createRadialGradient(ox,oy,0,ox,oy,r); g.addColorStop(0,'rgba(70,72,96,0.75)'); g.addColorStop(0.6,'rgba(96,98,124,0.45)'); g.addColorStop(1,'rgba(120,124,150,0)'); sk.fillStyle=g; sk.fillRect(ox-r,oy-r,r*2,r*2); }
+  sk.strokeStyle='rgba(255,236,140,0.95)'; sk.lineWidth=1.3; sk.lineJoin='miter'; for(let k=0;k<5;k++){ let lx0=x+(rnd()-0.5)*80, ly0=y-25+(rnd()-0.5)*20; sk.beginPath(); sk.moveTo(lx0,ly0); for(let q=0;q<4;q++){ lx0+=(rnd()-0.5)*10; ly0+=7+rnd()*5; sk.lineTo(lx0,ly0); } sk.stroke(); }
+  skl('THUNDERHEAD ISLES',x,y-48,10,2,'#2C2A40'); }
+// Sky Mine (Akkala sky)
+{ const [x,y]=G(4519,2096); island(x,y,13); sk.fillStyle='#5A4A36'; sk.fillRect(x-6,y-6,5,4); sk.fillRect(x+1,y-7,5,5); const g=sk.createRadialGradient(x+4,y-2,0,x+4,y-2,9); g.addColorStop(0,'rgba(120,240,230,0.9)'); g.addColorStop(1,'rgba(120,240,230,0)'); sk.fillStyle=g; sk.fillRect(x-6,y-12,20,20); skl('Sky Mine',x,y+22,8,0,'#2C3E50',true); }
+// Temple of Time on Great Sky Island
+{ const x=gsi[0]-4, y=gsi[1]-6; sk.fillStyle='#E9E4D4'; sk.strokeStyle=INK; sk.lineWidth=0.7; sk.fillRect(x-9,y-8,18,9); sk.strokeRect(x-9,y-8,18,9); sk.beginPath(); sk.moveTo(x-11,y-8); sk.lineTo(x,y-15); sk.lineTo(x+11,y-8); sk.closePath(); sk.fillStyle='#4E8F7A'; sk.fill(); sk.stroke(); sk.fillStyle='#3A3026'; sk.fillRect(x-2,y-5,4,6); skl('Temple of Time',x,y+40,7.5,0,'#2C3E50',true); }
+// floating Zonai platforms and debris
+for(let k=0;k<34;k++){ const x=30+rnd()*940, y=40+rnd()*720, w=3+rnd()*6; sk.save(); sk.translate(x,y); sk.rotate((rnd()-0.5)*0.6); sk.fillStyle='#B9B19A'; sk.strokeStyle=INK; sk.lineWidth=0.5; sk.fillRect(-w,-1.2,w*2,2.4); sk.strokeRect(-w,-1.2,w*2,2.4); if(rnd()<0.5){ sk.fillStyle='#2F8F7F'; sk.fillRect(-1,-1.2,2,2.4); } sk.restore(); }
+// birds
+sk.strokeStyle='rgba(40,50,60,0.6)'; sk.lineWidth=0.8; for(let k=0;k<14;k++){ const x=rnd()*W, y=rnd()*H; for(let b=0;b<3;b++){ const bx=x+b*6+rnd()*3, by=y+(b%2)*4; sk.beginPath(); sk.moveTo(bx-2.5,by-1.2); sk.quadraticCurveTo(bx-1,by-2,bx,by); sk.quadraticCurveTo(bx+1,by-2,bx+2.5,by-1.2); sk.stroke(); } }
+Object.keys(SKR).forEach(k=>{ const nm=(k in SKN)?SKN[k]:'Skies of '+k; if(!nm) return; const a=SKR[k]; const x=a.reduce((m,s)=>m+s.x,0)/a.length, y=a.reduce((m,s)=>m+s.y,0)/a.length; skl(nm,x,y+34,8,0,'#2C3E50',true); });
 sk.strokeStyle='#C9A85C'; sk.lineWidth=3; sk.strokeRect(5,5,W-10,H-10); sk.lineWidth=1; sk.strokeRect(11,11,W-22,H-22);
 // ---------- depths layer ----------
 const deco=document.createElement('canvas'); deco.width=2000; deco.height=1600; const dp=deco.getContext('2d'); dp.setTransform(2,0,0,2,0,0);
@@ -913,7 +954,24 @@ dl('THE DEPTHS',500,40,20,8,'rgba(217,188,114,0.9)','rgba(0,0,0,0.7)');
 [['HEBRA',-2600,3600],['TABANTHA',-3350,750],['GERUDO',-3500,-3550],['CENTRAL HYRULE',-700,-400],['ELDIN',2050,2050],['AKKALA',3950,2850],['LANAYRU',3300,-300],['NECLUDA',2500,-2850],['FARON',700,-3780]].forEach(([t,x,y])=>{ const p=G(x,y); dl(t,p[0],p[1],14,5,'rgba(201,168,92,0.5)','rgba(0,0,0,0.6)'); });
 [['Under Death Mountain',2500,2700],['Beneath the Castle',-250,1050],['Gerudo Depths',-3500,-2700],['Hebra Depths',-2700,3000],['Gloom wastes',900,-3300]].forEach(([t,x,y])=>{ const p=G(x,y); dl(t,p[0],p[1],7.5,0,'rgba(220,200,150,0.6)','rgba(0,0,0,0.6)',1); });
 dp.strokeStyle='#5B4E2E'; dp.lineWidth=3; dp.strokeRect(5,5,W-10,H-10); dp.lineWidth=1; dp.strokeRect(11,11,W-22,H-22);
-window.relightDepths=function(){ const c=$('#cvDeep'), x=c.getContext('2d'); x.setTransform(2,0,0,2,0,0); x.globalCompositeOperation='source-over'; x.clearRect(0,0,W,H); x.imageSmoothingEnabled=true; x.imageSmoothingQuality='high'; x.drawImage(dc,0,0,W,H);
+const dterr=document.createElement('canvas'); dterr.width=2000; dterr.height=1600; const dt=dterr.getContext('2d'); dt.setTransform(2,0,0,2,0,0); dt.imageSmoothingEnabled=true; dt.imageSmoothingQuality='high'; dt.drawImage(dc,0,0,W,H);
+// surface water becomes towering walls in the Depths
+dt.lineCap='round'; dt.lineJoin='round';
+const wall=(draw,w)=>{ dt.save(); dt.translate(2.5,3.5); draw(); dt.strokeStyle='rgba(0,0,0,0.6)'; dt.lineWidth=w*3.4; dt.stroke(); dt.restore(); draw(); dt.strokeStyle='#4B4249'; dt.lineWidth=w*3; dt.stroke(); draw(); dt.strokeStyle='#6A5E62'; dt.lineWidth=w*1.6; dt.stroke(); dt.save(); dt.translate(-0.9,-0.9); draw(); dt.strokeStyle='rgba(190,170,155,0.55)'; dt.lineWidth=w*0.7; dt.stroke(); dt.restore(); };
+RIV.forEach(([gp0,w])=>{ const gp=meander(gp0); wall(()=>curveOn(dt,gp),w); });
+{ const c=G(20,-2650); wall(()=>{ dt.beginPath(); dt.ellipse(c[0],c[1],50,36,0,0,Math.PI*2); },3); const c2=G(-380,930); wall(()=>{ dt.beginPath(); dt.ellipse(c2[0],c2[1],22,14,0,0,Math.PI*2); },2); }
+// lava under Death Mountain
+dp.save(); dp.globalCompositeOperation='lighter'; for(let k=0;k<16;k++){ const [x,y]=G(2300+(rnd()-0.5)*1500,2500+(rnd()-0.5)*1000); const r=4+rnd()*9; const g=dp.createRadialGradient(x,y,0,x,y,r*2.4); g.addColorStop(0,'rgba(255,150,40,0.85)'); g.addColorStop(0.4,'rgba(230,70,20,0.45)'); g.addColorStop(1,'rgba(200,40,10,0)'); dp.fillStyle=g; dp.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8); } dp.restore();
+// chasm openings: shafts of daylight from above
+CHASMS.forEach(ch=>{ const x=ch.x, y=ch.y; dp.save(); dp.globalCompositeOperation='lighter'; const g=dp.createRadialGradient(x,y,0,x,y,16); g.addColorStop(0,'rgba(210,225,255,0.55)'); g.addColorStop(1,'rgba(210,225,255,0)'); dp.fillStyle=g; dp.fillRect(x-16,y-16,32,32); dp.restore(); dp.beginPath(); dp.arc(x,y,4.5,0,Math.PI*2); dp.strokeStyle='rgba(225,235,255,0.75)'; dp.lineWidth=0.8; dp.stroke(); });
+// abandoned mines (real positions)
+const MINES=[['Great Abandoned Central Mine',-861,-1941,1],['Abandoned Kara Kara Mine',-3186,-2508],['Abandoned Gerudo Mine',-3880,-2966],['Abandoned Hateno Mine',3527,-2188],['Abandoned Lurelin Mine',2948,-3373],['Abandoned Lanayru Mine',3255,559],['Abandoned Eldin Mine',1688,2388],['Abandoned Kakariko Mine',1776,-1183],['Abandoned Hebra Mine',-2463,1904],['Abandoned Tarrey Mine',3959,1568]];
+MINES.forEach(([n,gx,gy,big])=>{ const [x,y]=G(gx,gy); const s=big?1.6:1;
+  dp.strokeStyle='rgba(170,140,95,0.85)'; dp.lineWidth=0.6; for(const sg of [-1,1]){ dp.beginPath(); dp.moveTo(x+6*s,y+2); dp.quadraticCurveTo(x+18*s,y+2+sg*6*s,x+30*s,y+sg*12*s); dp.stroke(); dp.beginPath(); dp.moveTo(x+6*s,y+3.6); dp.quadraticCurveTo(x+18*s,y+3.6+sg*6*s,x+30*s,y+1.6+sg*12*s); dp.stroke(); }
+  [[-7,-3,6,5],[-1,-5,7,7],[6,-2,5,4]].forEach(([dx,dy,w,h])=>{ dp.fillStyle='#3B2F26'; dp.strokeStyle='rgba(201,168,92,0.8)'; dp.lineWidth=0.6; dp.fillRect(x+dx*s,y+dy*s,w*s,h*s); dp.strokeRect(x+dx*s,y+dy*s,w*s,h*s); dp.beginPath(); dp.moveTo(x+(dx-1)*s,y+dy*s); dp.lineTo(x+(dx+w/2)*s,y+(dy-3)*s); dp.lineTo(x+(dx+w+1)*s,y+dy*s); dp.fillStyle='#5A4636'; dp.fill(); dp.stroke(); });
+  dp.save(); dp.globalCompositeOperation='lighter'; [[-5,-6],[4,-8],[9,-4]].forEach(([dx,dy])=>{ const lx0=x+dx*s, ly0=y+dy*s; const g=dp.createRadialGradient(lx0,ly0,0,lx0,ly0,7*s); g.addColorStop(0,'rgba(255,190,90,0.8)'); g.addColorStop(1,'rgba(255,150,60,0)'); dp.fillStyle=g; dp.fillRect(lx0-7*s,ly0-7*s,14*s,14*s); }); dp.restore();
+  dl(big?n:n.replace('Abandoned ',''),x,y+(big?16:11),big?8.5:7,0,'rgba(232,206,140,0.95)','rgba(0,0,0,0.75)',1); });
+window.relightDepths=function(){ const c=$('#cvDeep'), x=c.getContext('2d'); x.setTransform(2,0,0,2,0,0); x.globalCompositeOperation='source-over'; x.clearRect(0,0,W,H); x.imageSmoothingEnabled=true; x.imageSmoothingQuality='high'; x.drawImage(dterr,0,0,W,H);
   const lit=SHRINES.filter(s=>s.root&&st.lr[s.n]);
   const dk=document.createElement('canvas'); dk.width=1000; dk.height=800; const k=dk.getContext('2d'); k.fillStyle='rgba(3,4,8,0.8)'; k.fillRect(0,0,W,H); k.globalCompositeOperation='destination-out';
   lit.forEach(s=>{ const RR=64, g=k.createRadialGradient(s.x,s.y,0,s.x,s.y,RR); g.addColorStop(0,'rgba(0,0,0,1)'); g.addColorStop(0.55,'rgba(0,0,0,0.9)'); g.addColorStop(1,'rgba(0,0,0,0)'); k.fillStyle=g; k.fillRect(s.x-RR,s.y-RR,RR*2,RR*2); });
